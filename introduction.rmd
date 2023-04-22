@@ -1,0 +1,17 @@
+---
+title: "Introduction"
+output: html_document
+css: custom.css
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+<div class="text-paragraph">
+# 
+|       In today's digital era, music streaming services have become an essential part of our daily lives. Among these services, Spotify stands out as one of the most popular platforms, providing access to millions of songs and podcasts to users worldwide. With the rapid growth of the music industry and increasing competition among artists, understanding the factors influencing Spotify streams is crucial for artists and music producers alike.
+|       This research focuses on the data analysis and visualization regarding the factors impacting Spotify streams, such as genre, artist popularity, song features, video metrics, and social media presence. The Spotify and Youtube Dataset serves as the foundation for our analysis. To validate the results, regression analysis was conducted to test the statistical significance of the variables, providing valuable insights into the dynamics of music streaming and the key elements driving success on the platform.
+</div>
+
+
+

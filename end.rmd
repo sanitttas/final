@@ -1,0 +1,24 @@
+---
+title: "Conclusion"
+output:
+  html_document:
+    css: custom.css
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+<div class="text-paragraph">
+# 
+|             Our research sheds light on the multiple factors that contribute to a song's success on streaming platforms. By collecting and analyzing data, we have reached the following conclusions:
+
+|             •	The majority of songs in our sample had a smaller number of streams, with a few extreme outliers exhibiting significantly higher stream counts.
+|             •	On average, songs in the Spotify sample had 135 million streams. However, the high standard deviation implies that the sample mean may vary considerably from the population mean.
+|             •	Songs with lower energy, acousticness, liveness, valence, and duration tend to get more streams on Spotify.
+|             •	Louder songs positively impact the number of streams on Spotify.
+|             •	The popularity of a song's video is arguably the most influential factor, with every two additional views resulting in one additional stream on Spotify.
+</div>
+<div class="text-paragraph">
+# References
+|            RASTELLI, S.. (2023). Spotify and Youtube. Kaggle. https://www.kaggle.com/datasets/salvatorerastelli/spotify-and-youtube
+</div>

@@ -1,0 +1,12 @@
+---
+title: "Enhancing Spotify Streams through Song Features"
+author: "Sanita Sikora, Kristofers Malnačs"
+date: "April 21, 2022"
+output:
+  html_document:
+    css: custom.css
+---
+<div style="text-align: center;">
+  <img src="spotifylogo.png" alt="Spotify Logo" width="25%" height="25%">
+</div>
+

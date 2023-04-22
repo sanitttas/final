@@ -1,0 +1,83 @@
+---
+title: "Initial Analysis of Data"
+output:
+  html_document:
+    css: custom.css
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+```{r start, echo=FALSE}
+Data1 <- read.csv("Spotify_Youtube.csv.csv", header=TRUE, sep=",")
+```
+<div class="text-paragraph">
+# 
+|             We have collected extensive data on Streams and other key metrics that could help artists achieve greater success on the platform. To gain a better understanding of our data's initial distribution, we'll examine the histogram of Streams on Spotify as well as the mean and median of streams.
+
+</div>
+
+```{r plot, echo=FALSE, message=FALSE, warning=FALSE}
+library(dplyr)
+library(ggplot2)
+
+spotify_green <- "#1DB954"
+dark_gray <- "#444444"
+
+Data1 %>%
+  mutate(Stream_millions = Stream / 1000000) %>%
+  ggplot(aes(x = Stream_millions)) + 
+  geom_histogram(color = spotify_green, fill = "black", bins = 60) +
+  labs(x = "Streams (in millions)",
+       y = "Frequency") +
+  theme(plot.background = element_rect(fill = "black", color = "black"),
+        plot.margin = margin(0, 0, 0, 0, "pt"),
+        panel.background = element_rect(fill = "black"),
+        panel.grid.major = element_line(color = dark_gray),
+        panel.grid.minor = element_line(color = dark_gray),
+        axis.title.x = element_text(color = "white", size = 14, face = "bold"),
+        axis.title.y = element_text(color = "white", size = 14, face = "bold"),
+        axis.text.x = element_text(color = "white"),
+        axis.text.y = element_text(color = "white"),
+        axis.ticks = element_blank(),
+        plot.title = element_text(hjust = 0.5, color = "white"),
+        panel.border = element_blank(),
+        strip.background = element_blank(),
+        axis.line = element_line(color = "black"))
+
+Data1 <- Data1 %>%
+  mutate(Stream_millions = Stream / 1000000)
+
+mean_Stream_millions <- Data1 %>% 
+  summarise(mean = mean(Stream_millions, na.rm = TRUE))
+mean_Stream_millions
+
+median_Stream_millions <- Data1 %>% 
+  summarise(median = median(Stream_millions, na.rm = TRUE))
+
+median_Stream_millions
+```
+<div class="text-paragraph">
+# 
+|             With the average of streams per song being 135 million and median being approximately  50 million  we can conclude that majority of the songs have relatively little streams comparing to only a small proportion of songs that have extremely high number of streams. That can also be concluded from the histogram as most of the values are clustered in low numbers, which makes it clear that the music industry is fiercely competitive, making it challenging to achieve success. However, with our data-driven approach and insights, we believe we can help artists overcome these obstacles and make their mark.
+
+</div>
+<div class="text-paragraph">
+# 
+|             Here is a brief explanation of each variable that will be used for further analysis:
+</div>
+<div class="text-paragraph">
+|             - Danceability: Indicates how suitable a track is for dancing, based on elements like tempo, rhythm stability, and beat strength. Ranges from 0.0 (least danceable) to 1.0 (most danceable).
+|             - Energy: Represents the intensity and activity of a track, with energetic tracks feeling fast, loud, and noisy. Ranges from 0.0 to 1.0.
+|             - Key: The pitch of the track, using standard Pitch Class notation (e.g., 0 = C, 1 = C♯/D♭, etc.). A value of -1 indicates no detected key.
+|             - Loudness: The average loudness of a track in decibels (dB), ranging typically between -60 and 0 dB.
+|             - Speechiness: Measures the presence of spoken words in a track, ranging from 0.0 (music) to 1.0 (speech).
+|             - Acousticness: A confidence measure (0.0 to 1.0) indicating the likelihood that a track is acoustic, with 1.0 being highly likely.
+|             - Instrumentalness: Predicts the absence of vocals in a track, ranging from 0.0 (vocal) to 1.0 (instrumental). Values above 0.5 generally represent instrumental tracks.
+|             - Liveness: Indicates the presence of a live audience in a recording, with higher values suggesting a higher probability of a live performance. Values above 0.8 imply a strong likelihood of being live.
+|             - Valence: Describes the musical positivity of a track, ranging from 0.0 (negative) to 1.0 (positive).
+|             - Tempo: The estimated tempo of a track in beats per minute (BPM), determined by the average beat duration.
+|             - Views: The number of views on a YouTube video.
+|             - Comments: The number of comments on a YouTube video.
+|             - Duration_ms: The duration of the track in milliseconds.
+|             - Stream: The number of streams of the song on Spotify.
+</div> 

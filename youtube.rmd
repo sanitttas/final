@@ -1,0 +1,71 @@
+---
+title: "Impact of Youtube Views on Streams"
+output: html_document
+css: custom.css
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+<div class="text-paragraph">
+# 
+|             As mentioned, our analysis showed that the popularity of the song's video, as measured by views on YouTube, is the most significant factor influencing the number of streams on Spotify. To illustrate this point, our team created a scatterplot that visaulises the correlation between YouTube views and Spotify streams.
+</div>
+
+
+
+```{r start, echo=FALSE}
+music_videos <- read.csv("Spotify_Youtube.csv.csv")
+colnames(music_videos) <- c("Index", "Artist", "Spotify_URL", "Track", "Album", 
+                            "Album_Type", "Spotify_URI", "Danceability", "Energy", 
+                            "Key", "Loudness", "Speechiness", "Acousticness", 
+                            "Instrumentalness", "Liveness", "Valence", "Tempo", 
+                            "Duration_ms", "Youtube_URL", "Title", "Channel", 
+                            "Views", "Likes", "Comments", "Description", 
+                            "Licensed", "Official_Video", "Stream")
+```
+```{r plot, echo=FALSE, message=FALSE, warning=FALSE}
+library(ggplot2)
+
+music_videos$Views_millions <- music_videos$Views / 1000000
+music_videos$Streams_millions <- music_videos$Stream / 1000000
+
+spotify_green <- "#1DB954"
+dark_gray <- "#444444"
+
+plot_views_streams_all <- ggplot(music_videos, aes(x = Views_millions, y = Streams_millions)) +
+  geom_point(color = "white") +
+  geom_smooth(method = "lm", se = FALSE, linetype = "solid", color = spotify_green, size = 1.5) +
+  labs(x = "Views (in millions)",
+       y = "Streams (in millions)") +
+  theme(plot.background = element_rect(fill = "black", color = "black"),
+        plot.margin = margin(0, 0, 0, 0, "pt"),
+        panel.background = element_rect(fill = "black"),
+        panel.grid.major = element_line(color = dark_gray),
+        panel.grid.minor = element_line(color = dark_gray),
+        axis.title.x = element_text(color = "white", size = 14, face = "bold"),
+        axis.title.y = element_text(color = "white", size = 14, face = "bold"),
+        axis.text.x = element_text(color = "white"),
+        axis.text.y = element_text(color = "white"),
+        axis.ticks = element_blank(),
+        plot.title = element_text(hjust = 0.5, color = "black"),
+        panel.border = element_blank(),
+        strip.background = element_blank(),
+        axis.line = element_line(color = "black"))
+
+plot_views_streams_all
+```
+<div class="text-paragraph">
+# 
+|             The scatterplot showed a positive linear relationship between YouTube views and Spotify streams. As the number of YouTube views increased, the number of Spotify streams also increased. In fact, the trend line on the scatterplot had a slope of approximately 0.5, indicating that for every two additional views on YouTube, there was one additional stream on Spotify.
+|            This relationship could be particularly important for upcoming artists who may not have a large following on Spotify yet. By promoting their music videos on YouTube and increasing their views, they can potentially reach a broader audience and increase their streams on Spotify. This underscores the importance of creating visually engaging music videos that capture the attention of viewers and encourage them to share and promote the content.
+
+</div>
+
+
+
+
+
+
+

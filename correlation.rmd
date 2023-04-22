@@ -1,0 +1,60 @@
+---
+title: "Correlation Matrix of Song Variables"
+output:
+  html_document:
+    css: custom.css
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+```{r start, echo=FALSE}
+Data1 <- read.csv("Spotify_Youtube.csv.csv", header=TRUE, sep=",")
+```
+
+
+
+
+<div class="text-paragraph">
+# 
+|            Before conducting a regression analysis, it is essential to examine the correlation matrix of the variables involved. This step allows our team to ensure that there are no multicollinearity issues among the independent variables, leading to a more accurate and reliable analysis.
+</div>
+
+
+```{r plot, echo=FALSE, message=FALSE, warning=FALSE}
+library(corrplot)
+library(dplyr)
+library(ggplot2)
+
+Data1 <- Data1 %>%
+  mutate(Danceability=(Danceability*100)) %>%
+  mutate(Energy=(Energy*100)) %>%
+  mutate(Speechiness=(Speechiness*100)) %>%
+  mutate(Acousticness=(Acousticness*100)) %>%
+  mutate(Instrumentalness=(Instrumentalness*100)) %>%
+  mutate(Liveness=(Liveness*100)) %>%
+  mutate(Valence=(Valence*100))
+
+
+cor_mat <- Data1 %>%
+  select(Stream, Danceability, Energy, Key, Loudness, Speechiness, Acousticness, 
+         Instrumentalness, Liveness, Valence, Tempo, Duration_ms, Comments, Views)%>%
+  cor(,use = "complete.obs")
+
+spotify_green <- "#1DB954"
+dark_gray <- "#444444"
+color_palette <- colorRampPalette(c("white", spotify_green, "black"))(100)
+
+par(bg = "black")
+
+corrplot(cor_mat, order = 'hclust', addrect = 8, col = color_palette,
+         tl.col = "white", cl.pos = "r", cl.col = "white",
+         number.cex = 0.7, tl.cex = 1)
+```
+<div class="text-paragraph">
+# 
+|            The white color represents a perfect negative correlation (coefficient -1), while bright green represents no correlation and black represents a perfect positive correlation (coefficient 1). After examining the relationship between different independent variables in our dataset through the correlation matrix, we found that our data was not significantly correlated. This means that there were no strong linear relationships between independent variables, which is a positive finding. It suggests that our regression model would not suffer from issues of multicollinearity that could have led to unreliable and unstable coefficient estimates. Thus, we can confidently proceed with regression analysis knowing that the results will be reliable and valid.
+|            With this information in mind, we can confidently proceed with our regression analysis.
+ 
+</div>
+

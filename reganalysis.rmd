@@ -1,0 +1,83 @@
+---
+title: "Regression Analysis"
+output:
+  html_document:
+    css: custom.css
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+```{r start, echo=FALSE}
+Data1 <- read.csv("Spotify_Youtube.csv.csv", header=TRUE, sep=",")
+```
+
+<div class="text-paragraph">
+# 
+|             To have a meaningful interpretation of results we adjust the dataset with values measured from 0 to 1 by multipliying them by 100. Therefore the adjusted values range from 0 to 100 and regression coefficients represent change of 1 in adjusted dataset, but 0.01 from real data. Otherwise the regression coefficients would not make sense as 1 increasein values measured from 0 to 1 is impossible.
+
+</div>
+```{r plot, echo=FALSE, message=FALSE, warning=FALSE}
+library(lmtest)
+library(dplyr)
+Data1 <- Data1 %>%
+  mutate(Danceability=(Danceability*100)) %>%
+  mutate(Energy=(Energy*100)) %>%
+  mutate(Speechiness=(Speechiness*100)) %>%
+  mutate(Acousticness=(Acousticness*100)) %>%
+  mutate(Instrumentalness=(Instrumentalness*100)) %>%
+  mutate(Liveness=(Liveness*100)) %>%
+  mutate(Valence=(Valence*100))
+regression <- Data1 %>%
+  lm(Stream~ Danceability+ Energy+ Key+ Loudness+ Speechiness+ Acousticness+ 
+       Instrumentalness+ Liveness+ Valence+ Tempo+ Duration_ms+ Comments+ Views, data=.)
+
+print(summary(regression))
+```
+<div class="text-paragraph">
+# 
+|             As we can see the regression equation is: Stream = 2.539* 10^(8) + 7.975* 10^(4)* Danceability -1.045* 10^(6)* Energy -8.637* 10^(5)* Key + 3.823* 10^(6)* Loudness – 3.845* 10^(5)* Speechiness -7.613* 10^(5) * Acousticness -2.958* 10^(5)* Instrumentalness -3.153* 10^(5)* Liveness – 4.868* 10^(5)* Valence- 3932* Tempo- 54.94* Duration_ms + 10.30* Comments + 0.5239* Views
+|             Our team's analysis reveals that the model exhibits a high level of statistical significance, having a p-value of less than 2.2 x 10^(-16), which supports the model's reliability.
+
+|             Moreover, the model demonstrates a satisfactory ability to explain the variance in Stream values, with an R-squared value of 0.376, accounting for 38% of the variability. It is important to note that the Views variable has a considerable influence on the number of Streams per song, as the Adjusted R-squared was only around 3% before its inclusion.
+
+|             However, it's worth noting that the standard error of 1.945* 10^(8) is relatively high, given the large mean value of Stream (1.359*10^(8)). This indicates a high level of variability and suggests that the sample mean may deviate significantly from the population mean. Nonetheless, this doesn't invalidate the model's overall reliability and the insights it can provide.
+|             
+</div>
+
+```{r plot1, echo=FALSE, message=FALSE, warning=FALSE}
+library(car)
+library(lmtest)
+library(dplyr)
+library(nortest)
+Data1 <- Data1 %>%
+  mutate(Danceability=(Danceability*100)) %>%
+  mutate(Energy=(Energy*100)) %>%
+  mutate(Speechiness=(Speechiness*100)) %>%
+  mutate(Acousticness=(Acousticness*100)) %>%
+  mutate(Instrumentalness=(Instrumentalness*100)) %>%
+  mutate(Liveness=(Liveness*100)) %>%
+  mutate(Valence=(Valence*100))
+Data1 %>%
+  lm(Stream~ Danceability+ Energy+ Key+ Loudness+ Speechiness+ Acousticness+ 
+       Instrumentalness+ Liveness+ Valence+ Tempo+ Duration_ms+ Comments+ Views, data=.) %>%
+  vif
+```
+<div class="text-paragraph">
+# 
+|             In order to further investigate multicollinearity, our team conducted a Variance Inflation Factor (VIF) test on the independent variables. The test results showed no issues, as all VIF values were below 10, thus confirming the absence of multicollinearity.
+|            Given the substantial size of our dataset, our team will focus on coefficients with a p-value that surpasses the 0.001 threshold for significance in the analysis. This approach ensures that we concentrate on the most statistically significant variables, thereby minimizing the risk of drawing inaccurate conclusions from insignificant results.
+|             Several independent variables, including Danceability, Tempo, and Comments, have coefficients that are statistically insignificant, with p-values exceeding 0.1. Similarly, Key, Speechiness, and Instrumentallness also fail to pass the 0.001 threshold for significance. Nevertheless, including them in the regression analysis can help reduce omitted variable bias and provide a more comprehensive understanding of the factors influencing the number of Streams.
+|             Among the statistically significant variables, which pass the 0.001 significance threshold, are Intercept, Energy, Loudness, Acousticness, Liveness, Valence, Duration, and Views. The interpretation of their coefficients is as follows:
+|             - The Intercept in our case doesn't have a meaningful interpretation. However, if all regression variables were at zero, the Streams would be at 25.39 million.
+|             - For each 1 point increase in Energy (0.01 in real data), the Streams decrease by 1.045 million, everything else kept constant.
+|             - For each decibel increase in Loudness, the Streams increase by 3.823 million, everything else kept constant.
+|             - For each 1 point increase in Acousticness(0.01 in real data), the Streams decrease by 761.3 thousand, everything else kept constant.
+|             - For each 1 point increase in Liveness(0.01 in real data), the Streams decrease by 315.3 thousand, everything else kept constant.
+|             - For each 1 point increase in Valence(0.01 in real data), the Streams decrease by 486.8 thousand, everything else kept constant.
+|             - For each 1 milisecond increase in Duration, the Streams decrease by 54.94, everything else kept constant.
+|             - For each 1 additional View, the Streams increase by 0.5239, everything else kept constant.
+|             It's worth noting that the coefficients of Energy, Acousticness, Liveness, and Valence are limited in their increase and decrease factors since they're measured on a scale of 0 to 1, or in our adjusted dataset, from 0 to 100. Similarly, Loudness is measured from -60 to 0, with the same limitations. Therefore, it's important to consider these constraints when interpreting the coefficients.
+|             The only variables that don't have such limitations are Views on the songs' YouTube video and Duration. However, logically speaking, to increase Streams, we would typically want to decrease the Duration, which cannot be lower than 0. This further highlights the need for a nuanced interpretation of the coefficients and a comprehensive understanding of the variables' limitations.
+
+</div>

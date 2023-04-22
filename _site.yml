@@ -1,0 +1,21 @@
+---
+title: "Spotify Stream Impacting Factors"
+navbar: 
+  title: 
+  left:
+  - text: Introduction
+    href: introduction.html
+  - text: Initial Analysis
+    href: initial.html 
+  - text: Correlation Matrix
+    href: correlation.html 
+  - text: Regression Analysis
+    href: reganalysis.html
+  - text: Youtube Views
+    href: youtube.html
+  - text: Conclusion
+    href: end.html
+output:
+  html_document:
+    theme: yeti
+---

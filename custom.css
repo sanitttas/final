@@ -1,0 +1,43 @@
+.title, .author, .date {
+  text-align: center;
+}
+
+body {
+  background-color: #000000;
+  color: #FFFFFF;
+  border-left: 10px solid #1DB954;
+  border-right: 10px solid #1DB954;
+}
+
+.title {
+  font-size: 7rem;
+  margin-bottom: 3rem;
+  font-weight: bold;
+  color: #f0f7f3;
+}
+
+.author {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  font-weight: bold;
+  color: #f0f7f3; 
+}
+
+.date {
+  font-size: 2.5rem;
+  margin-bottom: 3rem;
+  font-weight: bold;
+  color: #f0f7f3; 
+}
+
+
+.text-paragraph {
+  font-size: 20px;
+  margin-bottom: 40px;
+  margin-top: 40px;
+}
+
+pre code {
+  color: #1DB954;
+  font-weight: bold;
+}
